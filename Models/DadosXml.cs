@@ -18,5 +18,4 @@ namespace ManipulacaoArquivos.Models
         [XmlElement(ElementName = "valor")]
         public double Valor { get; set; }
     }
-
 }

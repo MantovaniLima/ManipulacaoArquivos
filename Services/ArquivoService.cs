@@ -2,6 +2,7 @@
 using ManipulacaoArquivos.Models;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
+using System.IO;
 using System.Xml.Serialization;
 
 namespace ManipulacaoArquivos.Services
@@ -16,11 +17,13 @@ namespace ManipulacaoArquivos.Services
             _arquivosConfig = arquivosConfig.Value ?? throw new ArgumentNullException(nameof(arquivosConfig));
             _logger = logger;
 
+            // Verifica se o caminho do arquivo JSON é válido
             if (string.IsNullOrWhiteSpace(_arquivosConfig.CaminhoJson) || !File.Exists(_arquivosConfig.CaminhoJson))
             {
                 throw new FileNotFoundException($"O arquivo JSON não foi encontrado: {_arquivosConfig.CaminhoJson}");
             }
 
+            // Verifica se o caminho do arquivo XML é válido
             if (string.IsNullOrWhiteSpace(_arquivosConfig.CaminhoXml) || !File.Exists(_arquivosConfig.CaminhoXml))
             {
                 throw new FileNotFoundException($"O arquivo XML não foi encontrado: {_arquivosConfig.CaminhoXml}");
@@ -45,9 +48,6 @@ namespace ManipulacaoArquivos.Services
         {
             try
             {
-                if (!File.Exists(_arquivosConfig.CaminhoXml))
-                    throw new FileNotFoundException($"Arquivo XML não encontrado: {_arquivosConfig.CaminhoXml}");
-
                 string xml = File.ReadAllText(_arquivosConfig.CaminhoXml);
 
                 XmlSerializer serializer = new XmlSerializer(typeof(DadosXml));
