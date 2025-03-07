@@ -2,8 +2,6 @@
 using ManipulacaoArquivos.Models;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
-using System.Xml;
-using System.Xml.Linq;
 using System.Xml.Serialization;
 
 namespace ManipulacaoArquivos.Services
@@ -42,6 +40,7 @@ namespace ManipulacaoArquivos.Services
                 throw;
             }
         }
+
         public DadosXml LerXml()
         {
             try
@@ -50,7 +49,6 @@ namespace ManipulacaoArquivos.Services
                     throw new FileNotFoundException($"Arquivo XML não encontrado: {_arquivosConfig.CaminhoXml}");
 
                 string xml = File.ReadAllText(_arquivosConfig.CaminhoXml);
-                xml = AdicionarElementoRaiz(xml); // 🔹 Corrige o XML antes de processar
 
                 XmlSerializer serializer = new XmlSerializer(typeof(DadosXml));
                 using (StringReader reader = new StringReader(xml))
@@ -63,11 +61,6 @@ namespace ManipulacaoArquivos.Services
                 _logger.LogError($"Erro ao ler o arquivo XML: {ex.Message}");
                 throw;
             }
-        }
-
-        private string AdicionarElementoRaiz(string xml)
-        {
-            return $"<Dados>{xml}</Dados>";
         }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace ManipulacaoArquivos.Models
 {
-    
+
     [XmlRoot(ElementName = "Dados")]
     public class DadosXml
     {
@@ -10,7 +10,6 @@ namespace ManipulacaoArquivos.Models
         public List<Row> Row { get; set; }
     }
 
-    [XmlRoot(ElementName = "row")]
     public class Row
     {
         [XmlElement(ElementName = "dia")]
@@ -19,5 +18,5 @@ namespace ManipulacaoArquivos.Models
         [XmlElement(ElementName = "valor")]
         public double Valor { get; set; }
     }
- 
+
 }
